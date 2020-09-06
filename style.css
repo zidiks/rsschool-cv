@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+    width: 1024px;
+}
+
+main {
+    text-align: center;
+    width: 1024px;
+}
+
+#points {
+    text-align: start;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+#code {
+    background-color: aliceblue;
+    border: 1px solid gray;
+    border-radius: 10px;
+}

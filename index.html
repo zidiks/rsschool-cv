@@ -7,194 +7,198 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>My Resume</h1>
-    <ol>
-        <li>Vladimir Mironov</li>
-        <li>E-mail: zidiks228@gmail.com, Phone: +375(33)3896071</li>
-        <li>I want to up my skill in JS and Front-end and find a job. Now  i study in medical university and i dream make a project in the field of medicine and programming.</li>
-        <li>JS, HTML, CSS, Git, Vue, Bootstrap, Onsen UI, Progressive Web App</li>
-        <li>
-            Last Code Example:
-            <p>
+    <header>
+        <h1>My Resume</h1>
+    </header>
+    <main>
+        <ol id="points">
+            <li>Vladimir Mironov</li>
+            <li>E-mail: zidiks228@gmail.com, Phone: +375(33)3896071</li>
+            <li>I want to up my skill in JS and Front-end and find a job. Now  i study in medical university and i dream make a project in the field of medicine and programming.</li>
+            <li>JS, HTML, CSS, Git, Vue, Bootstrap, Onsen UI, Progressive Web App</li>
+            <li>Last Code Example:
+                <div id="code">
                 <pre><code>
-                    <template>
-                        <v-ons-page>   
-                            <v-ons-alert-dialog modifier="rowfooter"
-                            :title="myTitle"
-                            :footer="{
-                                Ok: () => isVisible = false
-                            }"
-                            :visible.sync="isVisible"
-                            >
-                                Ваше приложение обновилось до версии: {{ version }} !
-                            </v-ons-alert-dialog>
-                            <v-ons-toolbar>
-                                <div class="center">
-                                    <div v-html="title" style="height:100%; text-align: center;"></div>
-                                </div>
-                            </v-ons-toolbar>
-                            <v-ons-tabbar swiepable animation="none" position="auto"
-                            :tabs="tabs"
-                            :visible="true"
-                            :index.sync="activeIndex"
-                            >
-                            </v-ons-tabbar>
-                        </v-ons-page>
-                    </template>
-        
-                    <script>
-                        import HomeComponent from './general-compnents/Home.vue';
-                        import CategoriesComponent from './general-compnents/Categories.vue';
-                        import VideoComponent from './general-compnents/Video.vue';
-                        import EventsComponent from './general-compnents/Events.vue';
-                        import SettingsComponent from './general-compnents/Settings.vue';
-                        import ArticleComponent from './general-compnents/Article.vue';
-                        import PlayComponent from './general-compnents/Play.vue';
-                        import EventComponent from './general-compnents/Event.vue';
-            
-                        export default {
-                            data() {
-                                return {
-                                    isVisible: false,
-                                    myTitle: 'Уведомление',
-                                    activeIndex: 0,
-                                    tabs: [
-                                        {
-                                            icon: 'home',
-                                            label: 'Главная',
-                                            page: HomeComponent,
-                                            props: {
-                                            myProp: 'This is a page prop!'
-                                            },
-                                            key: "HomePage"
-                                        },
-                                        {
-                                            icon: 'list',
-                                            label: 'Разделы',
-                                            page: CategoriesComponent,
-                                            props: {
-                                            myProp: 'This is a page prop!'
-                                            },
-                                            key: "СatPage"
-                                        },
-                                        {
-                                            icon: 'video',
-                                            label: 'Видео',
-                                            page: VideoComponent,
-                                            props: {
-                                            myProp: 'This is a page prop!'
-                                            },
-                                            key: "VideoPage"
-                                        },
-                                        {
-                                            icon: 'calendar',
-                                            label: 'Афиша',
-                                            page: EventsComponent,
-                                            props: {
-                                            myProp: 'This is a page prop!'
-                                            },
-                                            key: "EventsPage"
-                                        },
-                                        {
-                                            icon: 'cog',
-                                            label: 'Настройки',
-                                            page: SettingsComponent,
-                                            props: {
-                                            myProp: 'This is a page prop!'
-                                            },
-                                            key: "SettingsPage"
-                                        }
-                                    ]
-                                }
-                            },
-                            head: {
-                                script: [
-                                    { src: '/js/onsenui.min.js', body: true} 
-                                ]
-                            },
-                            methods: {
-                                login: function () {
-                                    const username = document.querySelector('#username').value;
-                                    const password = document.querySelector('#password').value;
-            
-                                    if (username === 'Zidiks' && password === 'karambatv123') {
-                                        ons.notification.alert('Correct!');
-                                    } else {
-                                        ons.notification.alert('Wrong username/password combination');
-                                    }
+            &lt;template&gt;
+                &lt;v-ons-page&gt;   
+                    &lt;v-ons-alert-dialog modifier=&quot;rowfooter&quot;
+                    :title=&quot;myTitle&quot;
+                    :footer=&quot;{
+                        Ok: () =&gt; isVisible = false
+                    }&quot;
+                    :visible.sync=&quot;isVisible&quot;
+                    &gt;
+                        Ваше приложение обновилось до версии: {{ version }} !
+                    &lt;/v-ons-alert-dialog&gt;
+                    &lt;v-ons-toolbar&gt;
+                        &lt;div class=&quot;center&quot;&gt;
+                            &lt;div v-html=&quot;title&quot; style=&quot;height:100%; text-align: center;&quot;&gt;&lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/v-ons-toolbar&gt;
+                    &lt;v-ons-tabbar swiepable animation=&quot;none&quot; position=&quot;auto&quot;
+                    :tabs=&quot;tabs&quot;
+                    :visible=&quot;true&quot;
+                    :index.sync=&quot;activeIndex&quot;
+                    &gt;
+                    &lt;/v-ons-tabbar&gt;
+                &lt;/v-ons-page&gt;
+            &lt;/template&gt;
+    
+            &lt;script&gt;
+                import HomeComponent from './general-compnents/Home.vue';
+                import CategoriesComponent from './general-compnents/Categories.vue';
+                import VideoComponent from './general-compnents/Video.vue';
+                import EventsComponent from './general-compnents/Events.vue';
+                import SettingsComponent from './general-compnents/Settings.vue';
+                import ArticleComponent from './general-compnents/Article.vue';
+                import PlayComponent from './general-compnents/Play.vue';
+                import EventComponent from './general-compnents/Event.vue';
+    
+                export default {
+                    data() {
+                        return {
+                            isVisible: false,
+                            myTitle: 'Уведомление',
+                            activeIndex: 0,
+                            tabs: [
+                                {
+                                    icon: 'home',
+                                    label: 'Главная',
+                                    page: HomeComponent,
+                                    props: {
+                                    myProp: 'This is a page prop!'
+                                    },
+                                    key: &quot;HomePage&quot;
                                 },
-                                md() {
-                                    return this.$ons.platform.isAndroid();
-                                }
-                            },        
-                            mounted() {
-                                console.log('Component mounted.');    
-                                let current_version = (localStorage.getItem('current_version') !== null) ?  localStorage.getItem('current_version') : document.querySelector('meta[name="version"]').content;
-                                localStorage.setItem('current_version', current_version); 
-                                let last_version = document.querySelector('meta[name="version"]').content;
-                                if (Number(current_version) != Number(last_version)) {
-                                    localStorage.setItem('current_version', last_version); 
-                                    this.isVisible = true;
-                                    this.myTitle = 'Обновление';
-                                }   
-                                this.$eventBus.$on('push-article', (data) => {
-                                    this.$emit('push-page', {  
-                                        key: 'articlepage', 
-                                        extends: ArticleComponent, 
-                                        data() { 
-                                            return {
-                                                title: data.article
-                                            } 
-                                        }
-                                    });
-                                });     
-                                this.$eventBus.$on('push-video', (data) => {
-                                    this.$emit('push-page', {  
-                                        key: 'videopage', 
-                                        extends: PlayComponent, 
-                                        data() { 
-                                            return {
-                                                video: data.video
-                                            } 
-                                        }
-                                    });
-                                });    
-                                this.$eventBus.$on('push-event', (data) => {
-                                    this.$emit('push-page', {  
-                                        key: 'eventpage', 
-                                        extends: EventComponent, 
-                                        data() { 
-                                            return {
-                                                event: data.event
-                                            } 
-                                        }
-                                    });
-                                });        
-                            },
-                            computed: {
-                                title() {
-                                if (this.tabs[this.activeIndex].label == 'Главная') return '<span style="font-size: 1.3rem; line-height: 2rem;"><span style="color: #0076ff;">VSMU</span><span style="color: #ee5050"><sup>+</sup></span></span>'; else
-                                return this.tabs[this.activeIndex].label;
+                                {
+                                    icon: 'list',
+                                    label: 'Разделы',
+                                    page: CategoriesComponent,
+                                    props: {
+                                    myProp: 'This is a page prop!'
+                                    },
+                                    key: &quot;СatPage&quot;
                                 },
-                                version () {
-                                    return document.querySelector('meta[name="version"]').content;
+                                {
+                                    icon: 'video',
+                                    label: 'Видео',
+                                    page: VideoComponent,
+                                    props: {
+                                    myProp: 'This is a page prop!'
+                                    },
+                                    key: &quot;VideoPage&quot;
+                                },
+                                {
+                                    icon: 'calendar',
+                                    label: 'Афиша',
+                                    page: EventsComponent,
+                                    props: {
+                                    myProp: 'This is a page prop!'
+                                    },
+                                    key: &quot;EventsPage&quot;
+                                },
+                                {
+                                    icon: 'cog',
+                                    label: 'Настройки',
+                                    page: SettingsComponent,
+                                    props: {
+                                    myProp: 'This is a page prop!'
+                                    },
+                                    key: &quot;SettingsPage&quot;
                                 }
-            
-                    }
+                            ]
                         }
-                    </script>
+                    },
+                    head: {
+                        script: [
+                            { src: '/js/onsenui.min.js', body: true} 
+                        ]
+                    },
+                    methods: {
+                        login: function () {
+                            const username = document.querySelector('#username').value;
+                            const password = document.querySelector('#password').value;
+    
+                            if (username === 'Zidiks' &amp;&amp; password === 'karambatv123') {
+                                ons.notification.alert('Correct!');
+                            } else {
+                                ons.notification.alert('Wrong username/password combination');
+                            }
+                        },
+                        md() {
+                            return this.$ons.platform.isAndroid();
+                        }
+                    },        
+                    mounted() {
+                        console.log('Component mounted.');    
+                        let current_version = (localStorage.getItem('current_version') !== null) ?  
+                        localStorage.getItem('current_version') : 
+                        document.querySelector('meta[name=&quot;version&quot;]').content;
+                        localStorage.setItem('current_version', current_version); 
+                        let last_version = document.querySelector('meta[name=&quot;version&quot;]').content;
+                        if (Number(current_version) != Number(last_version)) {
+                            localStorage.setItem('current_version', last_version); 
+                            this.isVisible = true;
+                            this.myTitle = 'Обновление';
+                        }   
+                        this.$eventBus.$on('push-article', (data) =&gt; {
+                            this.$emit('push-page', {  
+                                key: 'articlepage', 
+                                extends: ArticleComponent, 
+                                data() { 
+                                    return {
+                                        title: data.article
+                                    } 
+                                }
+                            });
+                        });     
+                        this.$eventBus.$on('push-video', (data) =&gt; {
+                            this.$emit('push-page', {  
+                                key: 'videopage', 
+                                extends: PlayComponent, 
+                                data() { 
+                                    return {
+                                        video: data.video
+                                    } 
+                                }
+                            });
+                        });    
+                        this.$eventBus.$on('push-event', (data) =&gt; {
+                            this.$emit('push-page', {  
+                                key: 'eventpage', 
+                                extends: EventComponent, 
+                                data() { 
+                                    return {
+                                        event: data.event
+                                    } 
+                                }
+                            });
+                        });        
+                    },
+                    computed: {
+                        title() {
+                        return this.tabs[this.activeIndex].label;
+                        },
+                        version () {
+                            return document.querySelector('meta[name=&quot;version&quot;]').content;
+                        }
+    
+            }
+                }
+            &lt;/script&gt;
                 </code></pre>
-            </p>
-        </li>
-        <li>
-            My web projects:
-            <ol>
-                <li><a href="https://vipautovoz.ru">VipAutoVoz</a></li>
-                <li><a href="https://stroymiks.by">Stroymiks</a></li>
-            </ol>
-        </li>
-        <li>2016-2021 Vitebsk State Order of Peoples' Friendship Medical University</li>
-        <li>A2 level</li>
-    </ol>
+                </div>
+            </li>
+            <li>
+                My web projects:
+                <ol>
+                    <li><a href="https://vipautovoz.ru">VipAutoVoz</a></li>
+                    <li><a href="https://stroymiks.by">Stroymiks</a></li>
+                </ol>
+            </li>
+            <li>2016-2021 Vitebsk State Order of Peoples' Friendship Medical University</li>
+            <li>A2 level</li>
+        </ol>
+    </main>
 </body>
 </html>
