@@ -1,5 +1,6 @@
 var BrowserSyncPlugin = require('browser-sync-webpack-plugin');
-
+var HtmlWebpackPlugin = require('html-webpack-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 module.exports = {
     entry: __dirname + '/src/app.js',
     output: {
@@ -11,7 +12,27 @@ module.exports = {
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
-            server: { baseDir: ['./'] }
-        })
-    ]
+            server: { baseDir: ['./dist'] }
+        }),
+        new HtmlWebpackPlugin({
+            hash: true,
+            title: 'Gem-puzzle by Zidiks',
+            template: './src/index.html',
+            filename: './index.html'
+        }),
+        new MiniCssExtractPlugin()
+    ],
+    module: {
+        rules: [{
+                test: /\.css$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader']
+            },
+            {
+                test: /\.html$/,
+                use: [{
+                    loader: 'html-loader'
+                }]
+            }
+        ]
+    }
 }

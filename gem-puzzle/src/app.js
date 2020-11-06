@@ -1,3 +1,3 @@
-exports.modules = require('./modules.js');
+const { routeTo } = require("./services/router");
 
-console.log('Start game');
+routeTo('menu');

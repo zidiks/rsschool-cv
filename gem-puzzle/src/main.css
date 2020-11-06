@@ -1,0 +1,20 @@
+z-link {
+    cursor: pointer;
+    transition: .3s;
+    user-select: none;
+}
+
+z-link:hover {
+    color: blue;
+}
+
+app {
+    transition: .2s;
+    opacity: 1;
+    display: block;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
