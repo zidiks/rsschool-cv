@@ -17,20 +17,16 @@ exports.routeTo = (route) => {
     setTimeout(() => {
         switch (route) {
             case 'menu':
-                app.innerHTML = menu.template;
-                menu.oninit();
+                swapHTML(menu);
                 break;
             case 'options':
-                app.innerHTML = options.template;
-                options.oninit();
+                swapHTML(options);
                 break;
             case 'game':
-                app.innerHTML = game.template;
-                game.oninit();
+                swapHTML(game);
                 break;
             default:
-                app.innerHTML = menu.template;
-                menu.oninit();
+                swapHTML(menu);
                 break;
         }
         this.initRoutes();
@@ -38,4 +34,9 @@ exports.routeTo = (route) => {
             app.style.opacity = 1;
         }, 250);
     }, 200);
+}
+
+function swapHTML(tmpl) {
+    app.innerHTML = tmpl.template;
+    tmpl.oninit();
 }

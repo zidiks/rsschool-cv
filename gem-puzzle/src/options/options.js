@@ -2,7 +2,7 @@ require('./options.css');
 const template = require('./options.html');
 
 const options = {
-    size: 2
+    size: 10
 }
 
 const OnInit = () => {
