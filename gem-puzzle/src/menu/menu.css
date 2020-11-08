@@ -1,0 +1,41 @@
+#menu {
+    height: 100vh;
+    width: 100vw;
+    color: white;
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 3fr;
+    overflow: hidden;
+}
+
+#menu-links {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-logo {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+#menu-logo img {
+    width: 60%;
+    margin-left: 4%;
+}
+
+#menu-links h1 {
+    font-size: 3vw !important;
+    text-align: center;
+}
+
+#menu-links z-link {
+    font-size: 1.5vw;
+}
+
+.z-link-p {
+    margin-top: 1rem;
+}

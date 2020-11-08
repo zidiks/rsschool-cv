@@ -18,12 +18,19 @@ exports.routeTo = (route) => {
         switch (route) {
             case 'menu':
                 swapHTML(menu);
+                options.globalProps.pause = true;
+                options.globalProps.stop = true;
                 break;
             case 'options':
                 swapHTML(options);
+                options.globalProps.pause = true;
+                options.globalProps.stop = true;
                 break;
             case 'game':
                 swapHTML(game);
+                break;
+            case 'exit':
+                window.close();
                 break;
             default:
                 swapHTML(menu);

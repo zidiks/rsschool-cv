@@ -1,6 +1,6 @@
-require('./game.css');
+require(['./game.css', './items-areas.css']);
 const template = require('./game.html');
-const { options } = require('../options/options');
+//const { options } = require('../options/options');
 const { buildField } = require('../services/puzzle-service');
 
 
