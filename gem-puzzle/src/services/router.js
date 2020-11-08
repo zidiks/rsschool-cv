@@ -1,5 +1,7 @@
 const { menu, game, options } = require('../modules');
 
+options.createApp();
+
 const app = document.getElementsByTagName('app')[0];
 
 

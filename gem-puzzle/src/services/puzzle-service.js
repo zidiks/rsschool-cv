@@ -85,6 +85,7 @@ function createMatrix(size) {
         }
         matrix.push(lineArray);
     }
+    console.log(matrix);
     return matrix;
 }
 
@@ -171,10 +172,12 @@ function timerUp() {
         if (!globalProps.pause && !globalProps.stop) {
             globalProps.timer++;
             let sec = globalProps.timer % 60;
-            let min = globalProps.timer >= 60 ? (lobalProps.timer - sec) / 60 : 0;
+            let min = globalProps.timer >= 60 ? (globalProps.timer - sec) / 60 : 0;
             document.getElementById('min').innerHTML = min < 10 ? `0${min}` : min;
             document.getElementById('sec').innerHTML = sec < 10 ? `0${sec}` : sec;
         }
         if (!globalProps.stop) timerUp();
     }, 1000);
 }
+
+function Randomizer() {}
