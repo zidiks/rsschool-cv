@@ -11,7 +11,7 @@
 #puzzle-field {
     display: grid;
     grid-column-gap: 1%;
-    grid-row-gap: 1%;
+    grid-row-gap: 5px;
     width: 50vw;
     height: 50vw;
     max-width: 500px;
@@ -22,10 +22,10 @@
 }
 
 .puzzle-item {
+    position: relative;
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% auto;
-    transition: .5s;
 }
 
 #game-nav {
@@ -50,8 +50,9 @@
 }
 
 .movable-puzzle {
+    position: relative;
     cursor: pointer;
-    transition: .3s;
+    transition: transform .5s !important;
 }
 
 .movable-puzzle:hover {
@@ -64,4 +65,20 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
+}
+
+.game-nav-btn {
+    cursor: pointer;
+    transition: .3s;
+    user-select: none;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.game-nav-btn:hover {
+    background-color: white;
+    color: black;
 }

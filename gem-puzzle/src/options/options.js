@@ -2,7 +2,7 @@ require('./options.css');
 const template = require('./options.html');
 
 const options = {
-    size: 4
+    size: 8
 }
 
 const globalProps = {
@@ -15,7 +15,15 @@ const globalProps = {
     moves: [],
     timer: 0,
     pause: true,
-    stop: true
+    stop: true,
+    win: false,
+    fopen: true,
+    audioFile: new Audio('/assets/bg-audio.mp3'),
+    playAudio: new Audio('/assets/play-audio.mp3'),
+    gap: 0,
+    gameInterval: undefined,
+    currEl: undefined,
+    currAnimation: undefined
 }
 
 const CreateApp = () => {
@@ -27,6 +35,10 @@ const CreateApp = () => {
     bgdiv.classList.add('area');
     bgdiv.innerHTML = '<ul id="app-bg-circles" class="circles"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul>'
     body.appendChild(bgdiv);
+    const loading = document.createElement('div');
+    loading.id = 'loading';
+    loading.innerHTML = '<img src="/assets/loading.svg">';
+    body.appendChild(loading);
 }
 
 

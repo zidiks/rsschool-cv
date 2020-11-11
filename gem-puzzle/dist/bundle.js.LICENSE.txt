@@ -1,0 +1,18 @@
+/**
+     * Element.requestFullScreen() polyfill
+     * @author Chris Ferdinandi
+     * @license MIT
+     */
+
+/**
+     * document.exitFullScreen() polyfill
+     * @author Chris Ferdinandi
+     * @license MIT
+     */
+
+/**
+     * document.fullscreenElement polyfill
+     * Adapted from https://shaka-player-demo.appspot.com/docs/api/lib_polyfill_fullscreen.js.html
+     * @author Chris Ferdinandi
+     * @license MIT
+     */

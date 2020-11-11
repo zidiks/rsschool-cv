@@ -41,6 +41,54 @@
     margin-top: 1rem;
 }
 
+#author {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 150;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #4e54c8;
+    flex-direction: column;
+}
+
+#author h1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: 200;
+}
+
+.author-heart {
+    margin-top: 0.1rem;
+    margin-left: 0.3rem;
+    color: tomato;
+}
+
+#next {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 2rem;
+    animation-iteration-count: infinite;
+    opacity: 0.2;
+    animation: 2s linear 0s infinite alternate blink_anim;
+}
+
+@keyframes blink_anim {
+    from {
+        opacity: 0.2;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 z-link {
     cursor: pointer;
     transition: .3s;
@@ -190,6 +238,24 @@ body {
     height: 150px;
     animation-delay: 0s;
     animation-duration: 11s;
+}
+
+#loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #4e54c8;
+    z-index: 100;
+}
+
+#loading img {
+    width: 15vw;
+    height: auto;
 }
 
 @keyframes animate {

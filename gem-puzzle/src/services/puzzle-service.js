@@ -1,7 +1,10 @@
-const { options, globalProps } = require('../options/options')
+const { options, globalProps } = require('../options/options');
 
 exports.buildField = () => {
+    document.getElementById('loading').style.display = 'flex';
     const canv = document.createElement('canvas');
+    const loading = document.getElementById('loading');
+    const revertBtn = document.getElementById('revert-btn');
     canv.width = 1000 / options.size;
     canv.height = 1000 / options.size;
     var context = canv.getContext('2d');
@@ -51,16 +54,29 @@ exports.buildField = () => {
             y: randomInteger(0, options.size - 1)
         }
 
-        globalProps.moves = [];
         globalProps.timer = 0;
-
+        globalProps.moves = [];
+        globalProps.win = false;
         globalProps.matrix = createMatrix(options.size);
         globalProps.solution = createMatrix(options.size);
-        document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
+        Randomizer();
         document.getElementById(globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x]).classList.add('clear-puzzle');
-        getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
         globalProps.pause = false;
         globalProps.stop = false;
+        revertBtn.addEventListener('click', RevertMoves);
+        setTimeout(() => {
+            loading.style.display = 'none';
+            globalProps.playAudio.currentTime = 0;
+            globalProps.playAudio.play();
+            var soundGameInterval = setInterval(() => {
+                if (globalProps.stop == false && globalProps.pause == false) {
+                    globalProps.playAudio.currentTime = 0;
+                    globalProps.playAudio.play();
+                } else {
+                    clearInterval(soundGameInterval);
+                }
+            }, 21000);
+        }, 1000);
         timer();
     };
 
@@ -103,29 +119,92 @@ function getMovable(clearPuzzleXY, puzzleMatrix, size) {
     if (clearPuzzleXY.x - 1 >= 0) {
         movEls.push({
             x: clearPuzzleXY.x - 1,
-            y: clearPuzzleXY.y
+            y: clearPuzzleXY.y,
+            anim: {
+                top: 0,
+                left: 1
+            }
         });
     }
     if (clearPuzzleXY.x + 1 <= size - 1) {
         movEls.push({
             x: clearPuzzleXY.x + 1,
-            y: clearPuzzleXY.y
+            y: clearPuzzleXY.y,
+            anim: {
+                left: -1,
+                top: 0
+            }
         });
     }
     if (clearPuzzleXY.y - 1 >= 0) {
         movEls.push({
             x: clearPuzzleXY.x,
-            y: clearPuzzleXY.y - 1
+            y: clearPuzzleXY.y - 1,
+            anim: {
+                left: 0,
+                top: 1
+            }
         });
     }
     if (clearPuzzleXY.y + 1 <= size - 1) {
         movEls.push({
             x: clearPuzzleXY.x,
-            y: clearPuzzleXY.y + 1
+            y: clearPuzzleXY.y + 1,
+            anim: {
+                left: 0,
+                top: -1
+            }
         });
     }
 
     addMoveListener(movEls);
+}
+
+function getMovableRand(clearPuzzleXY, puzzleMatrix, size) {
+    let movEls = [];
+
+    if (clearPuzzleXY.x - 1 >= 0) {
+        movEls.push({
+            x: clearPuzzleXY.x - 1,
+            y: clearPuzzleXY.y,
+            anim: {
+                top: 0,
+                left: 1
+            }
+        });
+    }
+    if (clearPuzzleXY.x + 1 <= size - 1) {
+        movEls.push({
+            x: clearPuzzleXY.x + 1,
+            y: clearPuzzleXY.y,
+            anim: {
+                left: -1,
+                top: 0
+            }
+        });
+    }
+    if (clearPuzzleXY.y - 1 >= 0) {
+        movEls.push({
+            x: clearPuzzleXY.x,
+            y: clearPuzzleXY.y - 1,
+            anim: {
+                left: 0,
+                top: 1
+            }
+        });
+    }
+    if (clearPuzzleXY.y + 1 <= size - 1) {
+        movEls.push({
+            x: clearPuzzleXY.x,
+            y: clearPuzzleXY.y + 1,
+            anim: {
+                left: 0,
+                top: -1
+            }
+        });
+    }
+
+    moveFuncRand(movEls[randomInteger(0, movEls.length - 1)]);
 }
 
 function addMoveListener(array) {
@@ -137,10 +216,33 @@ function addMoveListener(array) {
         const el = document.getElementById(globalProps.matrix[element.y][element.x]);
         el.classList.add('movable-puzzle');
         el.addEventListener('click', () => {
+            globalProps.currEl = globalProps.matrix[element.y][element.x];
             moveFunc(element);
+            renderFunc(globalProps.currEl, element.anim);
         })
     });
-    document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
+
+}
+
+function moveFuncRand(element) {
+    globalProps.moves.push({
+        to: globalProps.clearPuzzleXY,
+        from: element
+    })
+    let cache = globalProps.matrix[element.y][element.x];
+    globalProps.matrix[element.y][element.x] = globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x];
+    globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x] = cache;
+    globalProps.clearPuzzleXY = element;
+    getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+    console.log(globalProps.moves);
+    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13);
+    if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
+        setTimeout(() => {
+            alert('You win!');
+            globalProps.win = true;
+            globalProps.pause = true;
+        }, 100);
+    }
 }
 
 function moveFunc(element) {
@@ -154,9 +256,30 @@ function moveFunc(element) {
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length;
-    if (globalProps.solution.toString() == globalProps.matrix.toString()) {
+    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13);
+    if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         setTimeout(() => {
+            alert('You win!');
+            globalProps.win = true;
+            globalProps.pause = true;
+        }, 100);
+    }
+}
+
+function moveFuncRev(el, anim) {
+    let cache = globalProps.matrix[el.y][el.x];
+    globalProps.currEl = globalProps.matrix[el.y][el.x];
+    renderFunc(globalProps.currEl, anim, -1);
+    globalProps.matrix[el.y][el.x] = globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x];
+    globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x] = cache;
+    globalProps.clearPuzzleXY = el;
+    getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+    //console.log(globalProps.moves);
+    document.getElementById('move-count').innerHTML = globalProps.moves.length;
+    if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
+        setTimeout(() => {
+            globalProps.pause = true;
+            globalProps.win = true;
             alert('You win!');
         }, 100);
     }
@@ -180,4 +303,56 @@ function timerUp() {
     }, 1000);
 }
 
-function Randomizer() {}
+function Randomizer() {
+    for (let index = 0; index < options.size * 13; index++) {
+        getMovableRand(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+    }
+    getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+    renderFunc();
+}
+
+function RevertMoves() {
+    globalProps.moves.reverse().forEach((element, index) => {
+        setTimeout(() => {
+            if (!globalProps.win) moveFuncRev(element.to, element.from.anim);
+        }, (index + 1) * 320);
+    });
+}
+
+function renderFunc(element = undefined, animation = undefined, reverse = 1) {
+    console.log(element);
+    if (element) {
+        const gap = (document.getElementsByClassName('puzzle-item')[0].offsetWidth + 5) / 300;
+
+        let start = Date.now(); // запомнить время начала
+
+        let timer = setInterval(function() {
+            // сколько времени прошло с начала анимации?
+            let timePassed = Date.now() - start;
+
+            if (timePassed >= 300) {
+                clearInterval(timer); // закончить анимацию через 2 секунды
+                setTimeout(() => {
+                    document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
+                    document.getElementById(element).style.left = '0px';
+                    document.getElementById(element).style.top = '0px';
+                }, 10);
+                return;
+            }
+
+            // отрисовать анимацию на момент timePassed, прошедший с начала анимации
+            draw(timePassed);
+
+        }, 10);
+
+        // в то время как timePassed идёт от 0 до 2000
+        // left изменяет значение от 0px до 400px
+        function draw(timePassed) {
+            document.getElementById(element).style.left = timePassed * animation.left * reverse * gap + 'px';
+            document.getElementById(element).style.top = timePassed * animation.top * reverse * gap + 'px';
+        }
+    }
+
+    if (!element) document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
+    globalProps.currEl = undefined;
+}

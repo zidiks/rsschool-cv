@@ -1,10 +1,17 @@
 require(['./game.css', './items-areas.css']);
 const template = require('./game.html');
-//const { options } = require('../options/options');
+const { globalProps } = require('../options/options');
 const { buildField } = require('../services/puzzle-service');
 
 
 const OnInit = () => {
+    const tomenu = document.getElementById('tomenu');
+    tomenu.addEventListener('click', () => {
+        setTimeout(() => {
+            globalProps.audioFile.currentTime = 0;
+            globalProps.audioFile.play();
+        }, 400);
+    })
     buildField();
 }
 

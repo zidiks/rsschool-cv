@@ -3,6 +3,7 @@ const { menu, game, options } = require('../modules');
 options.createApp();
 
 const app = document.getElementsByTagName('app')[0];
+const loading = document.getElementById('loading');
 
 
 exports.initRoutes = () => {
@@ -22,6 +23,20 @@ exports.routeTo = (route) => {
                 swapHTML(menu);
                 options.globalProps.pause = true;
                 options.globalProps.stop = true;
+                options.globalProps.playAudio.currentTime = 0;
+                options.globalProps.playAudio.pause();
+                if (options.globalProps.fopen) {
+                    options.globalProps.audioFile.currentTime = 0;
+                    options.globalProps.audioFile.play();
+                    var soundMenuInterval = setInterval(() => {
+                        if (options.globalProps.stop == true) {
+                            options.globalProps.audioFile.currentTime = 0;
+                            options.globalProps.audioFile.play();
+                        } else {
+                            clearInterval(soundMenuInterval);
+                        }
+                    }, 42670);
+                }
                 break;
             case 'options':
                 swapHTML(options);
@@ -29,10 +44,12 @@ exports.routeTo = (route) => {
                 options.globalProps.stop = true;
                 break;
             case 'game':
+                options.globalProps.audioFile.currentTime = 0;
+                options.globalProps.audioFile.pause();
+                clearInterval(menu.soundInterval);
                 swapHTML(game);
                 break;
             case 'exit':
-                window.close();
                 break;
             default:
                 swapHTML(menu);
