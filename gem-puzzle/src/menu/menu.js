@@ -1,6 +1,6 @@
 require('./menu.css');
 const template = require('./menu.html');
-const { globalProps } = require('../options/options');
+const { globalProps, audioManager } = require('../options/options');
 var soundInterval;
 
 const OnInit = () => {
@@ -25,16 +25,7 @@ const OnInit = () => {
     next.addEventListener('click', () => {
         author.style.display = 'none';
         console.log('Start menu');
-        globalProps.audioFile.currentTime = 0;
-        globalProps.audioFile.play();
-        soundInterval = setInterval(() => {
-            if (globalProps.stop == true) {
-                globalProps.audioFile.currentTime = 0;
-                globalProps.audioFile.play();
-            } else {
-                clearInterval(soundInterval);
-            }
-        }, 42670);
+        audioManager('play', 'menu');
     })
 }
 

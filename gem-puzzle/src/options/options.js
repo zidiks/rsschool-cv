@@ -2,7 +2,7 @@ require('./options.css');
 const template = require('./options.html');
 
 const options = {
-    size: 8
+    size: 4
 }
 
 const globalProps = {
@@ -19,9 +19,8 @@ const globalProps = {
     win: false,
     fopen: true,
     audioFile: new Audio('/assets/bg-audio.mp3'),
-    playAudio: new Audio('/assets/play-audio.mp3'),
     gap: 0,
-    gameInterval: undefined,
+    currPage: undefined,
     currEl: undefined,
     currAnimation: undefined
 }
@@ -46,10 +45,43 @@ const OnInit = () => {
     console.log('Start options');
 }
 
+const audioManager = (action, page) => {
+    switch (page) {
+        case 'game':
+            globalProps.audioFile.load();
+            globalProps.audioFile = new Audio('/assets/play-audio.mp3');
+            break;
+        default:
+            globalProps.audioFile.load();
+            globalProps.audioFile = new Audio('/assets/bg-audio.mp3');
+            break;
+    }
+    switch (action) {
+        case 'pause':
+            globalProps.audioFile.pause();
+            break;
+        case 'stop':
+            globalProps.audioFile.currentTime = 0;
+            globalProps.audioFile.pause();
+            break;
+        case 'return':
+            globalProps.audioFile.play();
+        case 'play':
+            globalProps.audioFile.currentTime = 0;
+            globalProps.audioFile.addEventListener('ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false);
+            globalProps.audioFile.play();
+            break;
+    }
+}
+
 module.exports = {
     template: template,
     options: options,
     oninit: OnInit,
     globalProps: globalProps,
-    createApp: CreateApp
+    createApp: CreateApp,
+    audioManager: audioManager
 }

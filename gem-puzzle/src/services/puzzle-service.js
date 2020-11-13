@@ -1,4 +1,4 @@
-const { options, globalProps } = require('../options/options');
+const { options, globalProps, audioManager } = require('../options/options');
 
 exports.buildField = () => {
     document.getElementById('loading').style.display = 'flex';
@@ -66,16 +66,7 @@ exports.buildField = () => {
         revertBtn.addEventListener('click', RevertMoves);
         setTimeout(() => {
             loading.style.display = 'none';
-            globalProps.playAudio.currentTime = 0;
-            globalProps.playAudio.play();
-            var soundGameInterval = setInterval(() => {
-                if (globalProps.stop == false && globalProps.pause == false) {
-                    globalProps.playAudio.currentTime = 0;
-                    globalProps.playAudio.play();
-                } else {
-                    clearInterval(soundGameInterval);
-                }
-            }, 21000);
+            audioManager('play', 'game');
         }, 1000);
         timer();
     };
@@ -235,13 +226,9 @@ function moveFuncRand(element) {
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13);
+    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13 + 5 * options.size);
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
-        setTimeout(() => {
-            alert('You win!');
-            globalProps.win = true;
-            globalProps.pause = true;
-        }, 100);
+        youWin();
     }
 }
 
@@ -256,13 +243,9 @@ function moveFunc(element) {
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13);
+    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13 + 5 * options.size);
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
-        setTimeout(() => {
-            alert('You win!');
-            globalProps.win = true;
-            globalProps.pause = true;
-        }, 100);
+        youWin();
     }
 }
 
@@ -277,11 +260,7 @@ function moveFuncRev(el, anim) {
     //console.log(globalProps.moves);
     document.getElementById('move-count').innerHTML = globalProps.moves.length;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
-        setTimeout(() => {
-            globalProps.pause = true;
-            globalProps.win = true;
-            alert('You win!');
-        }, 100);
+        youWin();
     }
 }
 
@@ -304,7 +283,7 @@ function timerUp() {
 }
 
 function Randomizer() {
-    for (let index = 0; index < options.size * 13; index++) {
+    for (let index = 0; index < options.size * 13 + 5 * options.size; index++) {
         getMovableRand(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     }
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
@@ -355,4 +334,12 @@ function renderFunc(element = undefined, animation = undefined, reverse = 1) {
 
     if (!element) document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
     globalProps.currEl = undefined;
+}
+
+function youWin() {
+    setTimeout(() => {
+        globalProps.pause = true;
+        globalProps.win = true;
+        console.log('You win!');
+    }, 100);
 }
