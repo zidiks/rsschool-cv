@@ -19,8 +19,8 @@ const globalProps = {
     win: false,
     fopen: true,
     audioFile: new Audio('/assets/bg-audio.mp3'),
+    sound: true,
     gap: 0,
-    currPage: undefined,
     currEl: undefined,
     currAnimation: undefined
 }
@@ -42,23 +42,57 @@ const CreateApp = () => {
 
 
 const OnInit = () => {
+    const swapsound = document.getElementById('swapsound');
+    const sizeSelect = document.getElementById('options-select');
+    sizeSelect.value = options.size.toString();
+    sizeSelect.addEventListener('change', (e) => {
+        options.size = Number(e.target.value);
+        console.log(options.size);
+    })
+    if (globalProps.sound) {
+        swapsound.innerHTML = 'volume_up';
+    } else {
+        swapsound.innerHTML = 'volume_off';
+    }
+    swapsound.addEventListener('click', () => {
+        audioManager('swapsound', 'options');
+    })
     console.log('Start options');
 }
 
 const audioManager = (action, page) => {
-    switch (page) {
-        case 'game':
-            globalProps.audioFile.load();
-            globalProps.audioFile = new Audio('/assets/play-audio.mp3');
+    const swapsound = document.getElementById('swapsound');
+    switch (action) {
+        case 'swapsound':
+        case 'pause':
             break;
         default:
-            globalProps.audioFile.load();
-            globalProps.audioFile = new Audio('/assets/bg-audio.mp3');
+            switch (page) {
+                case 'game':
+                    globalProps.audioFile.load();
+                    globalProps.audioFile = new Audio('/assets/play-audio.mp3');
+                    break;
+                default:
+                    globalProps.audioFile.load();
+                    globalProps.audioFile = new Audio('/assets/bg-audio.mp3');
+                    break;
+            }
             break;
     }
     switch (action) {
         case 'pause':
             globalProps.audioFile.pause();
+            break;
+        case 'swapsound':
+            if (globalProps.sound) {
+                swapsound.innerHTML = 'volume_off';
+                globalProps.sound = false;
+                globalProps.audioFile.volume = 0;
+            } else {
+                swapsound.innerHTML = 'volume_up';
+                globalProps.sound = true;
+                globalProps.audioFile.volume = 1;
+            }
             break;
         case 'stop':
             globalProps.audioFile.currentTime = 0;
@@ -67,6 +101,13 @@ const audioManager = (action, page) => {
         case 'return':
             globalProps.audioFile.play();
         case 'play':
+            if (globalProps.sound) {
+                globalProps.sound = true;
+                globalProps.audioFile.volume = 1;
+            } else {
+                globalProps.sound = false;
+                globalProps.audioFile.volume = 0;
+            }
             globalProps.audioFile.currentTime = 0;
             globalProps.audioFile.addEventListener('ended', function() {
                 this.currentTime = 0;
