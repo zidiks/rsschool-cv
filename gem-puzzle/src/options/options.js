@@ -14,6 +14,7 @@ const globalProps = {
     matrix: [],
     solution: [],
     moves: [],
+    movesCount: 0,
     timer: 0,
     pause: true,
     stop: true,
@@ -125,7 +126,9 @@ const audioManager = (action, page) => {
                 this.currentTime = 0;
                 this.play();
             }, false);
-            globalProps.audioFile.play();
+            setTimeout(() => {
+                globalProps.audioFile.play();
+            }, 300);
             break;
     }
 }

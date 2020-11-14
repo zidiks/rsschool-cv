@@ -56,6 +56,7 @@ exports.buildField = () => {
 
         globalProps.timer = 0;
         globalProps.moves = [];
+        globalProps.movesCount = 0;
         globalProps.win = false;
         globalProps.matrix = createMatrix(options.size);
         globalProps.solution = createMatrix(options.size);
@@ -226,13 +227,14 @@ function moveFuncRand(element) {
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13 + 5 * options.size);
+    document.getElementById('move-count').innerHTML = globalProps.movesCount;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         youWin();
     }
 }
 
 function moveFunc(element) {
+    globalProps.movesCount++;
     globalProps.moves.push({
         to: globalProps.clearPuzzleXY,
         from: element
@@ -243,13 +245,14 @@ function moveFunc(element) {
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length - (options.size * 13 + 5 * options.size);
+    document.getElementById('move-count').innerHTML = globalProps.movesCount;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         youWin();
     }
 }
 
 function moveFuncRev(el, anim) {
+    globalProps.movesCount++;
     let cache = globalProps.matrix[el.y][el.x];
     globalProps.currEl = globalProps.matrix[el.y][el.x];
     renderFunc(globalProps.currEl, anim, -1);
@@ -258,7 +261,7 @@ function moveFuncRev(el, anim) {
     globalProps.clearPuzzleXY = el;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
     //console.log(globalProps.moves);
-    document.getElementById('move-count').innerHTML = globalProps.moves.length;
+    document.getElementById('move-count').innerHTML = globalProps.movesCount;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         youWin();
     }
@@ -337,10 +340,33 @@ function renderFunc(element = undefined, animation = undefined, reverse = 1) {
 }
 
 function youWin() {
+    globalProps.pause = true;
+    globalProps.win = true;
     setTimeout(() => {
-        globalProps.pause = true;
-        globalProps.win = true;
-        document.getElementById('game-win').style.display = 'flex';
-        console.log('You win!');
-    }, 1000);
+        let sec = globalProps.timer % 60;
+        let min = globalProps.timer >= 60 ? (globalProps.timer - sec) / 60 : 0;
+        document.getElementById('sol-min').innerHTML = min < 10 ? `0${min}` : min;
+        document.getElementById('sol-sec').innerHTML = sec < 10 ? `0${sec}` : sec;
+        document.getElementById('sol-moves').innerHTML = globalProps.movesCount;
+        const field = document.getElementById('puzzle-field');
+        field.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+        var ele = document.getElementsByClassName('puzzle-item');
+        for (var i = 0; i < ele.length; i++) {
+            ele[i].style.opacity = '0';
+        }
+        field.style.boxShadow = '0px 0px 50px white';
+        field.style.setProperty('grid-column-gap', '0');
+        field.style.setProperty('grid-row-gap', '0');
+        setTimeout(() => {
+            field.style.backgroundColor = 'rgba(255, 255, 255, 0)';
+            var ele = document.getElementsByClassName('puzzle-item');
+            for (var i = 0; i < ele.length; i++) {
+                ele[i].style.opacity = '1';
+            }
+            field.style.boxShadow = '0px 0px 50px black';
+        }, 1500);
+        setTimeout(() => {
+            document.getElementById('game-win').style.display = 'flex';
+        }, 3500);
+    }, 100);
 }

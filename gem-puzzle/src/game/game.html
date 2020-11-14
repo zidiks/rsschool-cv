@@ -13,7 +13,7 @@
                 <span id="return-game" class="z-link-p options-btn options-toggle">Return</span>
                 <span class="z-link-p options-btn options-toggle">Save progress</span>
                 <span class="z-link-p options-btn">Sound <span id="swapsound" class="material-icons options-toggle">volume_up</span></span>
-                <z-link id="tomenuu" to="menu" class="z-link-p">Exit</z-link>
+                <z-link id="tomenu" to="menu" class="z-link-p">Exit</z-link>
             </div>
             <div id="author">
                 <h1>Created by Zidiks with love <span class="material-icons author-heart">favorite</span></h1>
@@ -22,9 +22,11 @@
         </section>
     </div>
     <div id="game-win">
-        YOU WIN!
+        <span style="font-size: 1.8vw; margin-bottom: 1rem;">Уou solved the puzzle! </span>
+        <span>Time <span id="sol-min"></span>:<span id="sol-sec"></span></span>
+        <span>Moves <span id="sol-moves"></span></span>
         <span style="margin-left: 0;" class="z-link-p options-btn options-toggle">Save result</span>
         <span style="margin-left: 0" class="z-link-p options-btn options-toggle">Share result</span>
-        <z-link style="font-size: 1.5vw;" id="tomenu" to="menu" class="z-link-p">Go to menu</z-link>
+        <z-link style="font-size: 1.5vw;" id="tomenuu" to="menu" class="z-link-p">Go to menu</z-link>
     </div>
 </section>
