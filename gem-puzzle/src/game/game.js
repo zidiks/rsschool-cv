@@ -7,7 +7,7 @@ const { buildField } = require('../services/puzzle-service');
 const OnInit = () => {
     const swapsound = document.getElementById('swapsound');
     const tomenu = document.getElementById('tomenu');
-    const tomenuu = document.getElementById('tomenu');
+    const tomenuu = document.getElementById('tomenu-win');
     const topause = document.getElementById('topause');
     const pauseLayout = document.getElementById('game-layout');
     const returnBtn = document.getElementById('return-game');
