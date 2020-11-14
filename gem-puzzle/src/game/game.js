@@ -11,6 +11,12 @@ const OnInit = () => {
     const topause = document.getElementById('topause');
     const pauseLayout = document.getElementById('game-layout');
     const returnBtn = document.getElementById('return-game');
+    const saveResult = document.getElementById('save-result');
+    saveResult.addEventListener('click', () => {
+        saveResult.style.backgroundColor = '#3aa82e';
+        saveResult.style.color = 'white';
+        saveResult.innerHTML = 'Saved';
+    })
     topause.addEventListener('click', () => {
         globalProps.pause = true;
         pauseLayout.style.display = 'block';
