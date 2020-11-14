@@ -340,6 +340,7 @@ function youWin() {
     setTimeout(() => {
         globalProps.pause = true;
         globalProps.win = true;
+        document.getElementById('game-win').style.display = 'flex';
         console.log('You win!');
-    }, 100);
+    }, 1000);
 }

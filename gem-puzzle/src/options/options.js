@@ -1,8 +1,9 @@
 require('./options.css');
 const template = require('./options.html');
+const gameStorage = window.localStorage;
 
 const options = {
-    size: 4
+    size: gameStorage.getItem('size') ? Number(gameStorage.getItem('size')) : 4
 }
 
 const globalProps = {
@@ -19,7 +20,7 @@ const globalProps = {
     win: false,
     fopen: true,
     audioFile: new Audio('/assets/bg-audio.mp3'),
-    sound: true,
+    sound: gameStorage.getItem('sound') ? getSoundBol(gameStorage.getItem('sound')) : true,
     gap: 0,
     currEl: undefined,
     currAnimation: undefined
@@ -40,6 +41,15 @@ const CreateApp = () => {
     body.appendChild(loading);
 }
 
+function getSoundBol(str) {
+    switch (str) {
+        case 'false':
+            return false
+        default:
+            return true
+    }
+}
+
 
 const OnInit = () => {
     const swapsound = document.getElementById('swapsound');
@@ -47,6 +57,7 @@ const OnInit = () => {
     sizeSelect.value = options.size.toString();
     sizeSelect.addEventListener('change', (e) => {
         options.size = Number(e.target.value);
+        gameStorage.setItem('size', options.size);
         console.log(options.size);
     })
     if (globalProps.sound) {
@@ -93,6 +104,7 @@ const audioManager = (action, page) => {
                 globalProps.sound = true;
                 globalProps.audioFile.volume = 1;
             }
+            gameStorage.setItem('sound', globalProps.sound);
             break;
         case 'stop':
             globalProps.audioFile.currentTime = 0;
