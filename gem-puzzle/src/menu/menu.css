@@ -91,3 +91,16 @@
         opacity: 1;
     }
 }
+
+@media(max-width: 768px) {
+    #menu {
+        grid-template-rows: 1fr;
+        grid-template-columns: 1fr;
+    }
+    #menu-links h1 {
+        font-size: 2rem !important;
+    }
+    #menu-links z-link {
+        font-size: 1.2rem !important;
+    }
+}
