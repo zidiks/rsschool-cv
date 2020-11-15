@@ -27,6 +27,8 @@ const OnInit = () => {
         console.log('Start menu');
         audioManager('play', 'menu');
     })
+    if (window.localStorage.getItem('progress')) document.getElementById('load-progress').style.display = 'block';
+    else document.getElementById('load-progress').style.display = 'none';
 }
 
 module.exports = {

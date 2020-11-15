@@ -29,6 +29,13 @@ exports.routeTo = (route) => {
                 options.globalProps.pause = true;
                 options.globalProps.stop = true;
                 break;
+            case 'saved-game':
+                options.options.savedGame = JSON.parse(window.localStorage.getItem('progress'));
+                console.log(options.options.savedGame);
+                options.options.size = options.options.savedGame.size;
+                options.audioManager('stop', 'game');
+                swapHTML(game);
+                break;
             case 'game':
                 options.audioManager('stop', 'game');
                 swapHTML(game);

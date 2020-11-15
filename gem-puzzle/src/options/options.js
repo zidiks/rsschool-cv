@@ -3,7 +3,8 @@ const template = require('./options.html');
 const gameStorage = window.localStorage;
 
 const options = {
-    size: gameStorage.getItem('size') ? Number(gameStorage.getItem('size')) : 4
+    size: gameStorage.getItem('size') ? Number(gameStorage.getItem('size')) : 4,
+    savedGame: undefined
 }
 
 const globalProps = {

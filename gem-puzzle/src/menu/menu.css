@@ -40,6 +40,10 @@
     margin-top: 1rem;
 }
 
+#load-progress {
+    display: none;
+}
+
 #author {
     position: absolute;
     width: 100%;

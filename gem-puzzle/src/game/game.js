@@ -1,7 +1,8 @@
 require(['./game.css', './items-areas.css']);
 const template = require('./game.html');
-const { globalProps, audioManager } = require('../options/options');
+const { globalProps, audioManager, options } = require('../options/options');
 const { buildField } = require('../services/puzzle-service');
+const { getStrMatrix } = require('../services/puzzle-service');
 
 
 const OnInit = () => {
@@ -12,10 +13,25 @@ const OnInit = () => {
     const pauseLayout = document.getElementById('game-layout');
     const returnBtn = document.getElementById('return-game');
     const saveResult = document.getElementById('save-result');
+    const saveProgress = document.getElementById('save-progress');
     saveResult.addEventListener('click', () => {
         saveResult.style.backgroundColor = '#3aa82e';
         saveResult.style.color = 'white';
         saveResult.innerHTML = 'Saved';
+    })
+    saveProgress.addEventListener('click', () => {
+        const progress = {
+            matrix: globalProps.matrix,
+            size: options.size,
+            movesCount: globalProps.movesCount,
+            moves: globalProps.moves,
+            time: globalProps.timer,
+            clearPuzzleXY: globalProps.clearPuzzleXY
+        }
+        saveProgress.style.backgroundColor = '#3aa82e';
+        saveProgress.style.color = 'white';
+        saveProgress.innerHTML = 'Saved';
+        window.localStorage.setItem('progress', JSON.stringify(progress));
     })
     topause.addEventListener('click', () => {
         globalProps.pause = true;

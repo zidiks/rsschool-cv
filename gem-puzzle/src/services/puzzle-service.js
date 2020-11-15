@@ -48,15 +48,14 @@ exports.buildField = () => {
             }
 
         }
-
-        globalProps.clearPuzzleXY = {
+        globalProps.clearPuzzleXY = options.savedGame ? options.savedGame.clearPuzzleXY : {
             x: randomInteger(0, options.size - 1),
             y: randomInteger(0, options.size - 1)
         }
 
-        globalProps.timer = 0;
-        globalProps.moves = [];
-        globalProps.movesCount = 0;
+        globalProps.timer = options.savedGame ? options.savedGame.time : 0;
+        globalProps.moves = options.savedGame ? options.savedGame.moves : [];
+        globalProps.movesCount = options.savedGame ? options.savedGame.movesCount : 0;
         globalProps.win = false;
         globalProps.matrix = createMatrix(options.size);
         globalProps.solution = createMatrix(options.size);
@@ -268,7 +267,6 @@ function moveFuncRev(el, anim) {
 }
 
 function timer() {
-    globalProps.timer = 0;
     timerUp();
 }
 
@@ -286,11 +284,20 @@ function timerUp() {
 }
 
 function Randomizer() {
-    for (let index = 0; index < options.size * 13 + 5 * options.size; index++) {
-        getMovableRand(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+    if (options.savedGame) {
+        document.getElementById('move-count').innerHTML = globalProps.movesCount;
+        globalProps.matrix = options.savedGame.matrix;
+        getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+        document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
+        options.savedGame = undefined;
+    } else {
+        window.localStorage.removeItem('progress');
+        for (let index = 0; index < options.size * 13 + 5 * options.size; index++) {
+            getMovableRand(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+        }
+        getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
+        renderFunc();
     }
-    getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
-    renderFunc();
 }
 
 function RevertMoves() {
@@ -369,4 +376,8 @@ function youWin() {
             document.getElementById('game-win').style.display = 'flex';
         }, 3500);
     }, 100);
+}
+
+exports.getStrMatrix = () => {
+    return fromMatrix(globalProps.matrix);
 }
