@@ -116,3 +116,10 @@
     align-items: center;
     flex-direction: column;
 }
+
+@media(max-width: 768px) {
+    #puzzle-field {
+        width: 70vw !important;
+        height: 70vw !important;
+    }
+}
