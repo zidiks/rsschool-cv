@@ -57,7 +57,9 @@ exports.buildField = () => {
         globalProps.moves = options.savedGame ? options.savedGame.moves : [];
         globalProps.movesCount = options.savedGame ? options.savedGame.movesCount : 0;
         globalProps.win = false;
+        globalProps.blockanim = false;
         globalProps.autocomplete = false;
+        globalProps.blockmove = true;
         globalProps.matrix = createMatrix(options.size);
         globalProps.solution = createMatrix(options.size);
         Randomizer();
@@ -93,7 +95,7 @@ function createMatrix(size) {
         }
         matrix.push(lineArray);
     }
-    console.log(matrix);
+    //console.log(matrix);
     return matrix;
 }
 
@@ -208,16 +210,76 @@ function addMoveListener(array) {
         const el = document.getElementById(globalProps.matrix[element.y][element.x]);
         el.classList.add('movable-puzzle');
         el.addEventListener('mousedown', (e) => {
-            e.target.style.position = 'absolute';
-        })
-        el.addEventListener('mouseup', (e) => {
-            e.target.style.position = 'releative';
-            globalProps.currEl = globalProps.matrix[element.y][element.x];
-            moveFunc(element);
-            renderFunc(globalProps.currEl, element.anim);
+            el.ondragstart = function() {
+                return false;
+            };
+            globalProps.blockmove = false;
+            const gapp = document.getElementsByClassName('puzzle-item')[0].offsetWidth + 3;
+            // moveAt(e.pageX, e.pageY);
+            const currX = e.pageX;
+            const currY = e.pageY;
+            //console.log(currX, currY);
+
+            function onMouseMove(event) {
+                el.ondragstart = function() {
+                    return false;
+                };
+                // moveAt(event.pageX, event.pageY);
+                //console.log(event.pageX, event.pageY);
+                let xpercent = element.anim.left < 0 ? currX - event.pageX < 0 ? 0 : Math.abs((currX - event.pageX) / gapp) : element.anim.left > 0 ? currX - event.pageX > 0 ? 0 : Math.abs((currX - event.pageX) / gapp) : Math.abs((currX - event.pageX) / gapp);
+                let ypercent = element.anim.top < 0 ? currY - event.pageY < 0 ? 0 : Math.abs((currY - event.pageY) / gapp) : element.anim.top > 0 ? currY - event.pageY > 0 ? 0 : Math.abs((currY - event.pageY) / gapp) : Math.abs((currY - event.pageY) / gapp);
+                xpercent = xpercent < 0 ? 0 : xpercent > 1 ? 1 : xpercent;
+                ypercent = ypercent < 0 ? 0 : ypercent > 1 ? 1 : ypercent;
+                globalProps.xpercent = xpercent;
+                globalProps.ypercent = ypercent;
+                if (xpercent > 0.1 || ypercent > 0.1) {
+                    globalProps.blockanim = true;
+                }
+                if (!globalProps.blockmove) {
+                    document.getElementById(el.id).style.left = element.anim.left * xpercent * gapp + 'px';
+                    document.getElementById(el.id).style.top = element.anim.top * ypercent * gapp + 'px';
+                }
+                //el.style.top = element.anim.top * xpercent * yplus + 'px';
+                //console.log(xpercent);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+            document.getElementById('puzzle-field').onmouseup = function(e) {
+                triggerMouseEvent(el, "mouseup");
+                document.getElementById(el.id).style.left = 0 + 'px';
+                document.getElementById(el.id).style.top = 0 + 'px';
+                document.removeEventListener('mousemove', onMouseMove);
+                el.onmouseup = null;
+                globalProps.blockanim = false;
+            };
+        });
+
+        el.addEventListener('mouseup', () => {
+            if (!globalProps.lock) {
+                globalProps.currEl = globalProps.matrix[element.y][element.x];
+                if (globalProps.xpercent > 0.5 || globalProps.ypercent > 0.5 || globalProps.blockanim == false) moveFunc(element);
+                renderFunc(globalProps.currEl, element.anim);
+                globalProps.blockmove = true;
+                globalProps.lock = true;
+                setTimeout(() => {
+                    globalProps.lock = false;
+                }, 200);
+            }
         })
     });
 
+}
+
+function triggerMouseEvent(node, eventType) {
+    if (!globalProps.lock) {
+        var clickEvent = document.createEvent('MouseEvents');
+        clickEvent.initEvent(eventType, true, true);
+        node.dispatchEvent(clickEvent);
+        globalProps.lock = true;
+        setTimeout(() => {
+            globalProps.lock = false;
+        }, 100);
+    }
 }
 
 function moveFuncRand(element) {
@@ -230,7 +292,7 @@ function moveFuncRand(element) {
     globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x] = cache;
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
-    console.log(globalProps.moves);
+    // console.log(globalProps.moves);
     document.getElementById('move-count').innerHTML = globalProps.movesCount;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         youWin();
@@ -253,7 +315,7 @@ function moveFunc(element) {
     globalProps.matrix[globalProps.clearPuzzleXY.y][globalProps.clearPuzzleXY.x] = cache;
     globalProps.clearPuzzleXY = element;
     getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
-    console.log(globalProps.moves);
+    //console.log(globalProps.moves);
     document.getElementById('move-count').innerHTML = globalProps.movesCount;
     if (globalProps.solution.toString() == globalProps.matrix.toString() && globalProps.pause == false && globalProps.stop == false) {
         youWin();
@@ -320,8 +382,8 @@ function RevertMoves() {
 }
 
 function renderFunc(element = undefined, animation = undefined, reverse = 1) {
-    console.log(element);
-    if (element) {
+    //console.log(element);
+    if (element && !globalProps.blockanim) {
         const gap = (document.getElementsByClassName('puzzle-item')[0].offsetWidth + 5) / 300;
 
         let start = Date.now(); // запомнить время начала
@@ -352,6 +414,8 @@ function renderFunc(element = undefined, animation = undefined, reverse = 1) {
             document.getElementById(element).style.top = timePassed * animation.top * reverse * gap + 'px';
         }
     }
+
+    if (element && globalProps.blockanim) document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
 
     if (!element) document.getElementById('puzzle-field').style.gridTemplateAreas = fromMatrix(globalProps.matrix);
     globalProps.currEl = undefined;

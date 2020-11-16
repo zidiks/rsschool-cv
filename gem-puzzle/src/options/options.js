@@ -27,7 +27,12 @@ const globalProps = {
     gap: 0,
     currEl: undefined,
     currAnimation: undefined,
-    autocomplete: false
+    autocomplete: false,
+    blockanim: false,
+    blockmove: true,
+    lock: false,
+    xpercent: 0,
+    ypercent: 0
 }
 
 const CreateApp = () => {
