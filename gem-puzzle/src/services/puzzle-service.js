@@ -234,6 +234,11 @@ function moveFuncRand(element) {
 }
 
 function moveFunc(element) {
+    globalProps.moveAudio.currentTime = 0;
+    if (globalProps.sound) globalProps.moveAudio.play();
+    setTimeout(() => {
+        globalProps.moveAudio.pause();
+    }, 400);
     globalProps.movesCount++;
     globalProps.moves.push({
         to: globalProps.clearPuzzleXY,

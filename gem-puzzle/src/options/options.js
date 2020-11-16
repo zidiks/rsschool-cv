@@ -22,6 +22,7 @@ const globalProps = {
     win: false,
     fopen: true,
     audioFile: new Audio('/assets/bg-audio.mp3'),
+    moveAudio: new Audio('/assets/move.mp3'),
     sound: gameStorage.getItem('sound') ? getSoundBol(gameStorage.getItem('sound')) : true,
     gap: 0,
     currEl: undefined,
