@@ -364,7 +364,7 @@ function Randomizer() {
         options.savedGame = undefined;
     } else {
         window.localStorage.removeItem('progress');
-        for (let index = 0; index < options.size * 13 + 5 * options.size; index++) {
+        for (let index = 0; index < options.size * 13 + (3 + options.size) ** 2; index++) {
             getMovableRand(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
         }
         getMovable(globalProps.clearPuzzleXY, globalProps.matrix, options.size);
