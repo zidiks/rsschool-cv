@@ -74,7 +74,7 @@ exports.buildField = () => {
         timer();
     };
 
-    imageObj.src = 'darth-vader.jpg';
+    imageObj.src = `/assets/canvas/${randomInteger(1, 149)}.jpg`;
 }
 
 function randomInteger(min, max) {
@@ -377,7 +377,7 @@ function RevertMoves() {
     globalProps.moves.reverse().forEach((element, index) => {
         setTimeout(() => {
             if (!globalProps.win) moveFuncRev(element.to, element.from.anim);
-        }, (index + 1) * 320);
+        }, (index + 1) * 400);
     });
 }
 
