@@ -25,7 +25,8 @@ const globalProps = {
     sound: gameStorage.getItem('sound') ? getSoundBol(gameStorage.getItem('sound')) : true,
     gap: 0,
     currEl: undefined,
-    currAnimation: undefined
+    currAnimation: undefined,
+    autocomplete: false
 }
 
 const CreateApp = () => {

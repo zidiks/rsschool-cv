@@ -57,6 +57,7 @@ exports.buildField = () => {
         globalProps.moves = options.savedGame ? options.savedGame.moves : [];
         globalProps.movesCount = options.savedGame ? options.savedGame.movesCount : 0;
         globalProps.win = false;
+        globalProps.autocomplete = false;
         globalProps.matrix = createMatrix(options.size);
         globalProps.solution = createMatrix(options.size);
         Randomizer();
@@ -301,6 +302,7 @@ function Randomizer() {
 }
 
 function RevertMoves() {
+    globalProps.autocomplete = true;
     globalProps.moves.reverse().forEach((element, index) => {
         setTimeout(() => {
             if (!globalProps.win) moveFuncRev(element.to, element.from.anim);

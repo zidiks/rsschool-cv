@@ -1,4 +1,4 @@
-const { menu, game, options } = require('../modules');
+const { menu, game, options, score } = require('../modules');
 
 options.createApp();
 
@@ -21,6 +21,11 @@ exports.routeTo = (route) => {
         switch (route) {
             case 'menu':
                 swapHTML(menu);
+                options.globalProps.pause = true;
+                options.globalProps.stop = true;
+                break;
+            case 'score':
+                swapHTML(score);
                 options.globalProps.pause = true;
                 options.globalProps.stop = true;
                 break;
