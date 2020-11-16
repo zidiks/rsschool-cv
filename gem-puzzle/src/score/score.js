@@ -28,7 +28,7 @@ const OnInit = () => {
         scoreList.appendChild(div);
         let currscore = document.createElement('div');
         currscore.classList.add('scl-h-ul');
-        currscore.innerHTML = element.score.toFixed(4) * 10000;
+        currscore.innerHTML = Math.round(element.score.toFixed(4) * 10000);
         div.appendChild(currscore);
         scoreList.appendChild(div);
     });

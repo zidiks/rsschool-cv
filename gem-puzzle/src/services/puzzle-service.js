@@ -207,7 +207,11 @@ function addMoveListener(array) {
     array.forEach(element => {
         const el = document.getElementById(globalProps.matrix[element.y][element.x]);
         el.classList.add('movable-puzzle');
-        el.addEventListener('click', () => {
+        el.addEventListener('mousedown', (e) => {
+            e.target.style.position = 'absolute';
+        })
+        el.addEventListener('mouseup', (e) => {
+            e.target.style.position = 'releative';
             globalProps.currEl = globalProps.matrix[element.y][element.x];
             moveFunc(element);
             renderFunc(globalProps.currEl, element.anim);
