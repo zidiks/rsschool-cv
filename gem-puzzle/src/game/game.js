@@ -49,7 +49,8 @@ const OnInit = () => {
             movesCount: globalProps.movesCount,
             moves: globalProps.moves,
             time: globalProps.timer,
-            clearPuzzleXY: globalProps.clearPuzzleXY
+            clearPuzzleXY: globalProps.clearPuzzleXY,
+            canvImg: globalProps.canvImg
         }
         saveProgress.style.backgroundColor = '#3aa82e';
         saveProgress.style.color = 'white';

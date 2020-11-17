@@ -32,7 +32,8 @@ const globalProps = {
     blockmove: true,
     lock: false,
     xpercent: 0,
-    ypercent: 0
+    ypercent: 0,
+    canvImg: undefined
 }
 
 const CreateApp = () => {

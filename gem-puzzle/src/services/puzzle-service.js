@@ -74,7 +74,8 @@ exports.buildField = () => {
         timer();
     };
 
-    imageObj.src = `/assets/canvas/${randomInteger(1, 149)}.jpg`;
+    globalProps.canvImg = options.savedGame ? options.savedGame.canvImg : randomInteger(1, 149);
+    imageObj.src = `/assets/canvas/${globalProps.canvImg}.jpg`;
 }
 
 function randomInteger(min, max) {
@@ -373,12 +374,14 @@ function Randomizer() {
 }
 
 function RevertMoves() {
-    globalProps.autocomplete = true;
-    globalProps.moves.reverse().forEach((element, index) => {
-        setTimeout(() => {
-            if (!globalProps.win) moveFuncRev(element.to, element.from.anim);
-        }, (index + 1) * 400);
-    });
+    if (!globalProps.autocomplete) {
+        globalProps.autocomplete = true;
+        globalProps.moves.reverse().forEach((element, index) => {
+            setTimeout(() => {
+                if (!globalProps.win) moveFuncRev(element.to, element.from.anim);
+            }, (index + 1) * 400);
+        });
+    }
 }
 
 function renderFunc(element = undefined, animation = undefined, reverse = 1) {
