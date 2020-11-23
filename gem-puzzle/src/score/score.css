@@ -1,0 +1,21 @@
+#scorelist {
+    width: 80%;
+}
+
+.scorelist-header,
+.scorelist-content {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: 1fr;
+}
+
+.scorelist-content {
+    margin-top: 1rem;
+}
+
+.scl-h-ul {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

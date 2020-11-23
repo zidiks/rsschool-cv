@@ -1,0 +1,34 @@
+.options-btn {
+    user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5vw;
+}
+
+.options-toggle {
+    cursor: pointer;
+    transition: .3s;
+    user-select: none;
+    padding: 0.5rem;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 1rem;
+}
+
+.options-toggle:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+#options-select {
+    font-size: 1.5vw;
+    color: white;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    justify-content: center;
+    align-items: center;
+}

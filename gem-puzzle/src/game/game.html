@@ -1,0 +1,31 @@
+<section id="game">
+    <div id="game-nav">
+        <span id="topause" class="game-nav-link game-nav-btn"><i class="material-icons">pause_circle_outline</i></span>
+        <span class="game-nav-link" id=""><i style="margin-right: 0.2rem;" class="material-icons">swap_horiz</i> <span id="move-count">0</span></span>
+        <span class="game-nav-link" id=""><i style="margin-right: 0.2rem;" class="material-icons">watch_later</i> <span id="min">00</span> : <span id="sec">00</span></span>
+        <span class="game-nav-link game-nav-btn" id="revert-btn"><i class="material-icons">support</i></span>
+    </div>
+    <div id="puzzle-field"></div>
+    <div id="game-layout">
+        <section id="menu" class="game-pause-menu">
+            <div id="menu-links">
+                <h1>Pause</h1>
+                <span id="return-game" class="z-link-p options-btn options-toggle">Return</span>
+                <span id="save-progress" class="z-link-p options-btn options-toggle">Save progress</span>
+                <span class="z-link-p options-btn">Sound <span id="swapsound" class="material-icons options-toggle">volume_up</span></span>
+                <z-link id="tomenu" to="menu" class="z-link-p">Exit</z-link>
+            </div>
+            <div id="author">
+                <h1>Created by Zidiks with love <span class="material-icons author-heart">favorite</span></h1>
+                <span id="next" data-toggle-fullscreen>Play<i class="material-icons">navigate_next</i></span>
+            </div>
+        </section>
+    </div>
+    <div id="game-win">
+        <span style="font-size: 1.8vw; margin-bottom: 1rem; font-weight: 600;">Уou solved the puzzle! </span>
+        <span>Time <span id="sol-min"></span>:<span id="sol-sec"></span></span>
+        <span>Moves <span id="sol-moves"></span></span>
+        <span id="save-result" style="margin-left: 0;" class="z-link-p options-btn options-toggle">Save result</span>
+        <z-link style="font-size: 1.5vw;" id="tomenu-win" to="menu" class="z-link-p">Go to menu</z-link>
+    </div>
+</section>
